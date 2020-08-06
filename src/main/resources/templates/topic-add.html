@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:include="~{/fragments/head}">
+    </th:block>
+</head>
+
+<body>
+<div class="container">
+    <div class="row rounded">
+        <div class="col-12">
+            <nav class="navbar navbar-expand-xl navbar-light bg-light rounded">
+                <th:block th:include="~{/fragments/nav}">
+                </th:block>
+            </nav>
+        </div>
+    </div>
+    <!-- row -->
+    <div class="row tm-mt-big justify-content-center">
+        <div class="col-xl-8 col-lg-10 col-md-12 col-sm-12">
+            <div class="bg-white tm-block">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="tm-block-title d-inline-block">Add Topic</h2>
+                    </div>
+                </div>
+                <div class="row mt-4 tm-edit-product-row">
+                    <div class="col-xl-7 col-lg-7 col-md-12">
+                        <form th:action="@{/topics/add}" th:method="POST"
+                              th:object="${topicAddBindingModel}" class="tm-edit-product-form">
+
+                            <div class="input-group mb-3">
+                                <label for="name" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Name
+                                </label>
+                                <input id="name" name="name" type="text"
+                                      th:field="*{name}" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7"/>
+
+                            </div>
+                            <div class="input-group mb-3 justify-content-center">
+
+                                <small th:each="e : ${#fields.errors('name')}" th:text="${e}" class="text-danger">Topic name length must be more than 2 characters</small>
+
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <label for="description" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Description
+                                </label>
+                                <input id="description" name="description" type="text"
+                                       th:field="*{description}" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7"/>
+
+                            </div>
+                            <div class="input-group mb-3 justify-content-center">
+
+                                <small th:each="e : ${#fields.errors('description')}" th:text="${e}" class="text-danger">Description name length must be more than 2 characters</small>
+
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <label for="addedOn" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">StartedOn
+                                    Date
+                                </label>
+                                <input th:field="*{addedOn}" id="addedOn" name="addedOn" type="datetime-local"
+                                       class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7"
+                                       data-large-mode="true"/>
+
+                            </div>
+                            <div class="input-group mb-3 justify-content-center">
+
+                                <small th:each="e : ${#fields.errors('addedOn')}" th:text="${e}" class="text-danger">The date cannot be in the future!</small>
+
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="ml-auto col-xl-8 col-lg-8 col-md-8 col-sm-7 pl-0">
+                                    <button type="submit" class="btn btn-primary">Add
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-12 mx-auto mb-4">
+                        <img src="/img/ball.jpg" alt="Exercise picture" width="100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="row">
+        <th:block th:include="~{/fragments/footer}"></th:block>
+    </footer>
+</div>
+
+</body>
+
+</html>

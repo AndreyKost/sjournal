@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <th:block th:include="~{/fragments/head}"></th:block>
+
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <nav class="navbar navbar-expand-xl navbar-light bg-light rounded">
+                <th:block th:include="~{/fragments/nav}"></th:block>
+            </nav>
+        </div>
+    </div>
+    <!-- row -->
+    <div class="col-form-label-lg tm-content-row tm-mt-big">
+        <div class="tm-col tm-col-big text-center justify-content-center">
+            <div class="bg-white tm-block align-content-xl-center ">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <h2 class="tm-block-title">Rate article and comment</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <form th:object="${reviewAddBindingModel}" th:action="@{/article/rate}" method="POST"
+                              class="tm-signup-form">
+
+                            <div class="input-group mb-3">
+                                <label for="articleId" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Topics</label>
+                                <select class="custom-select col-xl-9 col-lg-8 col-md-8 col-sm-7"
+                                        id="articleId"
+                                        name="articleId">
+                                    <option selected>Select articles</option>
+
+                                    <option th:each="ar : ${allLatestArticles}" th:text="${ar}" th:value="${ar}">Topic One</option>
+
+                                </select>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label for="score">Score</label>
+
+                                <small th:each="e : ${#fields.errors('score')}" th:text="${e}" class="text-danger">Score must be between 2 and 6 inclusive</small>
+                                <br/>
+                                <select required class="custom-select col-xl-9 col-lg-8 col-md-8 col-sm-7" name="score"
+                                        id="score">
+                                    <option value="" selected>Enter your score</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-12 col-sm-8 tm-btn-right">
+                                    <button type="submit" class="btn btn-danger">Add Rate
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="row">
+        <th:block th:include="~{/fragments/footer}"></th:block>
+    </footer>
+</div>
+</body>
+</html>

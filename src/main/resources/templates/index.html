@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<th:block th:include="~{/fragments/head}">
+</th:block>
+</head>
+
+<body id="reportsPage">
+<div id="home">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="navbar navbar-expand-xl navbar-light bg-white tm-content-row">
+                    <th:block th:include="~{/fragments/guest-nav}">
+                    </th:block>
+                </nav>
+            </div>
+        </div>
+
+        <footer class="tm-content-row border-bottom b">
+            <th:block th:include="~{/fragments/footer}">
+            </th:block>
+        </footer>
+    </div>
+</div>
+
+</body>
+</html>

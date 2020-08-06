@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:include="~{/fragments/head}"></th:block>
+
+</head>
+
+<body>
+<div class="container">
+    <div class="row rounded">
+        <div class="col-12">
+            <nav class="navbar navbar-expand-xl navbar-light bg-light rounded">
+                <th:block th:include="~{/fragments/nav}"></th:block>
+            </nav>
+        </div>
+    </div>
+    <!-- row -->
+    <div class="row tm-mt-big justify-content-center">
+        <div class="col-xl-8 col-lg-10 col-md-12 col-sm-12 ">
+            <div class="bg-white tm-block">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="tm-block-title d-inline-block">Add your article</h2>
+                    </div>
+                </div>
+                <div class="row mt-4 tm-edit-product-row ">
+                    <div class="col-xl-7 col-lg-7 col-md-12">
+                        <form th:object="${articleAddBindingModel}" th:action="@{/article/add}" method="POST" class="tm-edit-product-form">
+
+
+                            <div class="input-group mb-3">
+                                <label for="topic" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Topics</label>
+                                <select class="custom-select col-xl-9 col-lg-8 col-md-8 col-sm-7"
+                                        id="topic"
+                                        name="topic">
+                                    <option selected>Select topics</option>
+
+                                    <option th:each="tp : ${allNewTopics}" th:text="${tp}" th:value="${tp}">Topic One</option>
+
+                                </select>
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <label for="textContent" class="col-xl-12 col-lg-4 col-md-4 col-sm-5 col-form-label-lg">
+                                    Text content
+                                </label>
+                                <br>
+                                <textarea rows = "12" cols = "60" th:field="*{textContent}" th:errorclass="bg-danger" id="textContent" name="textContent">
+                                </textarea><br>
+
+
+                            </div>
+
+                            <small th:each="e : ${#fields.errors('textContent')}" th:text="${e}" class="text-danger">Error in text content</small>
+
+
+                            <div class="input-group mb-3">
+                                <div class="ml-auto col-xl-8 col-lg-8 col-md-8 col-sm-7 pl-0">
+                                    <button type="submit" class="btn btn-primary">Add
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<footer class="row">
+    <th:block th:include="~{/fragments/footer}"></th:block>
+</footer>
+</div>
+
+
+</body>
+
+</html>
