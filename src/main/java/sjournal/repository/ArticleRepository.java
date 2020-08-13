@@ -11,4 +11,6 @@ public interface ArticleRepository extends JpaRepository<Article, String> {
     @Query("select a from Article as a where a.topic.name=:name")
     Article findByTopicName(String name);
 
+    Article findByName(String name);
+
 }

@@ -2,8 +2,11 @@ package sjournal.service.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import sjournal.error.ArticleNotFoundException;
+import sjournal.error.Constants;
 import sjournal.model.entity.Article;
 import sjournal.model.entity.Topic;
+import sjournal.model.entity.User;
 import sjournal.model.service.ArticleServiceModel;
 import sjournal.repository.ArticleRepository;
 import sjournal.service.ArticleService;
@@ -37,13 +40,13 @@ public class ArticleServiceImpl implements ArticleService {
         return this.articleRepository.findAll()
                 .stream()
                 .sorted(Comparator.comparing(Article::getAddedOn).reversed())
-                .map(article -> article.getTopic().getName())
+                .map(Article::getName)
                 .collect(Collectors.toList());
     }
 
     @Override
     public ArticleServiceModel findByName(String name) {
-        return this.modelMapper.map(articleRepository.findByTopicName(name),ArticleServiceModel.class);
+        return this.modelMapper.map(articleRepository.findByName(name),ArticleServiceModel.class);
     }
 
     @Override
@@ -54,6 +57,38 @@ public class ArticleServiceImpl implements ArticleService {
                 .stream()
                 .map(article -> this.modelMapper.map(article,ArticleServiceModel.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ArticleServiceModel findArticleById(String articleId) {
+       return this.articleRepository.findById(articleId)
+               .map(article -> this.modelMapper.map(article,ArticleServiceModel.class))
+               .orElseThrow(()-> new ArticleNotFoundException(Constants.ARTICLE_ID_NOT_FOUND));
+    }
+
+    @Override
+    public ArticleServiceModel editArticle(String id, ArticleServiceModel articleServiceModel) {
+        Article article=this.articleRepository.findById(id)
+                .orElseThrow(() -> new ArticleNotFoundException(Constants.ARTICLE_ID_NOT_FOUND));
+
+        //article.setTopic(this.modelMapper.map(articleServiceModel.getTopic(),Topic.class));
+        String newTextContent = articleServiceModel.getTextContent();
+        article.setTextContent(newTextContent);
+        //article.setAuthor(this.modelMapper.map(articleServiceModel.getAuthor(), User.class));
+        //article.setAddedOn(articleServiceModel.getAddedOn());
+
+        this.articleRepository.saveAndFlush(article);
+
+        return this.modelMapper.map(article, ArticleServiceModel.class);
+    }
+
+    @Override
+    public void deleteArticle(String id) {
+
+        Article article=this.articleRepository.findById(id)
+                .orElseThrow(()-> new ArticleNotFoundException(Constants.ARTICLE_ID_NOT_FOUND));
+
+        this.articleRepository.delete(article);
     }
 
 

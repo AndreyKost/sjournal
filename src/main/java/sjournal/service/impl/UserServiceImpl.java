@@ -15,6 +15,7 @@ import sjournal.repository.UserRepository;
 import sjournal.service.RoleService;
 import sjournal.service.UserService;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -81,11 +82,41 @@ public class UserServiceImpl implements UserService  {
 
     }
 
+    @Override
+    public UserServiceModel editUserProfile(UserServiceModel userServiceModel, String oldPassword) {
+        User user = this.userRepository.findByUsername(userServiceModel.getUsername())
+                .orElseThrow(()-> new UsernameNotFoundException(Constants.USER_ID_NOT_FOUND));
+
+        if (!this.bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new IllegalArgumentException(Constants.PASSWORD_IS_INCORRECT);
+        }
+
+
+        if(!"".equals(userServiceModel.getPassword())){
+            user.setPassword(this.bCryptPasswordEncoder.encode(userServiceModel.getPassword()));
+        } else {
+            user.setPassword(user.getPassword());
+        }
+
+
+        user.setEmail(userServiceModel.getEmail());
+
+        return this.modelMapper.map(this.userRepository.saveAndFlush(user), UserServiceModel.class);
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return this.userRepository
                 .findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(Constants.USERNAME_NOT_FOUND));
+    }
+
+    @Override
+    public List<UserServiceModel> findAllUsers() {
+        return this.userRepository.findAll()
+                .stream()
+                .map(user -> this.modelMapper.map(user, UserServiceModel.class))
+                .collect(Collectors.toList());
     }
 }

@@ -1,20 +1,25 @@
 package sjournal.model.service;
 
 public class RoleServiceModel extends BaseServiceModel {
-    private String name;
 
-    public RoleServiceModel(String name) {
-        this.name = name;
-    }
+    private String authority;
 
     public RoleServiceModel() {
     }
 
-    public String getName() {
-        return name;
+    public String getAuthority() {
+        return authority;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
+
+    public RoleServiceModel(String authority) {
+        this.authority = authority;
+    }
+
+
+
+
 }

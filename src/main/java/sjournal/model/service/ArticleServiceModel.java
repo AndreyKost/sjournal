@@ -3,12 +3,21 @@ package sjournal.model.service;
 import java.time.LocalDateTime;
 
 public class ArticleServiceModel extends BaseServiceModel{
+    private String name;
     private String textContent;
     private LocalDateTime addedOn;
     private UserServiceModel author;
     private TopicServiceModel topic;
 
     public ArticleServiceModel() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getTextContent() {

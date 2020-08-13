@@ -9,6 +9,8 @@ public class ArticleAllViewModel {
 
     private String id;
 
+    private String name;
+
     private String textContent;
 
     private LocalDateTime addedOn;
@@ -16,6 +18,14 @@ public class ArticleAllViewModel {
     private String author;
 
     private String topic;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getId() {
         return id;

@@ -9,13 +9,15 @@ import java.util.Set;
 public interface ArticleService {
     void add(ArticleServiceModel articleServiceModel);
 
-    //ArticleServiceModel findOneToCheck();// tuka e dobre da e view model vmesto service model da go opravq
-
-    //ArticleServiceModel findById(String homeworkId);
-
     List<String> findAllArticles();
 
     ArticleServiceModel findByName(String name);
 
     List<ArticleServiceModel> findWholeArticles();
+
+    ArticleServiceModel findArticleById(String articleId);
+
+    ArticleServiceModel editArticle(String id,ArticleServiceModel articleServiceModel);
+
+    void deleteArticle(String id);
 }

@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import sjournal.model.service.UserServiceModel;
 
 
+import java.util.Arrays;
 import java.util.List;
 
 public interface UserService extends UserDetailsService {
@@ -18,7 +19,10 @@ public interface UserService extends UserDetailsService {
 
     UserServiceModel findById(String id);
 
+    UserServiceModel editUserProfile(UserServiceModel userServiceModel, String oldPassword);
 
     @Override
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+
+    List<UserServiceModel> findAllUsers();
 }
