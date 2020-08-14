@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+</head>
+<body>
+<div class="container-fluid">
+    <header>
+        <th:block th:include="~{fragments/nav}"></th:block>
+    </header>
+    <main class="mt-3">
+            <div class="details-article text-center">
+                <span style="visibility: hidden">....</span>
+                <div class="text-center mt-5">
+                    <h1 th:utext="'Name: ' + ${article.getName()}"></h1>
+                </div>
+                <div class="row">
+                    <div class="col col-md-12">
+                        <h4 th:utext="'Topic: ' + ${article.getTopic().getName()}"></h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-md-12 mt-0 ">
+                        <h2 th:utext="'Text content: ' + ${article.getTextContent()}"></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-md-12">
+                        <h4 th:utext="'Author: ' + ${article.getAuthor().getUsername()}"></h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-md-12 mt-3">
+                        <h4 th:utext="'Article added on: ' + ${article.getAddedOn()}"></h4>
+                    </div>
+                </div>
+                <span style="visibility: hidden">....</span>
+            </div>
+    </main>
+    <footer>
+        <th:block th:include="~{fragments/footer}"></th:block>
+    </footer>
+</div>
+</body>
+</html>

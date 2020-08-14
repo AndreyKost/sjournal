@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+</head>
+<body>
+<div class="container-fluid">
+    <header>
+        <th:block th:include="~{fragments/nav}"></th:block>
+    </header>
+    <main class="mt-5">
+        <div class="edi-art">
+            <span style="visibility: hidden">....</span>
+            <h1 class="text-center font-weight-bold text-dark">Edit Article</h1>
+            <hr class="hr-2 bg-dark w-25">
+            <form id="add-product-form" class="form w-25 mx-auto"   th:action="@{/articles/edit/{id}(id=${articleId})}"
+                  method="post" enctype="multipart/form-data"><input type="hidden" name="_csrf"
+                                                                     value="c686cd14-a7f9-4216-8009-c093b7d3df86">
+               <!-- <div class="form-group">
+                    <label for="topic-name" class="mb-1">Topic</label>
+                    <input type="text" class="form-control mt-1" id="topic-name" name="name"
+                           th:value="${article.getTopic().getName()}">
+                </div>-->
+                <div class="form-group">
+                    <label  for="article-content" class="mb-1">Article text content</label>
+                    <textarea  class="mt-1" name="textContent" id="article-content" cols="41" rows="5"
+                              th:utext="${article.getTextContent()}"></textarea>
+                </div>
+                <!--<div class="form-group">
+                    <label for="article-author" class="mb-1">Author</label>
+                    <input type="text" class="form-control mt-1" id="article-author" name="author"
+                           th:value="${article.getAuthor().getUsername()}">
+                </div>
+                <div class="form-group">
+                    <label for="article-addedon" class="mb-1">Author</label>
+                    <input type="text" class="form-control mt-1" id="article-addedon" name="addedon"
+                           th:value="${article.getAddedOn()}">
+                </div>-->
+                <hr class="hr-2 bg-dark">
+                <div class="button-holder d-flex justify-content-center">
+                    <button type="submit" class="btn bg-hero ml-4 glow-button">Edit Article</button>
+                </div>
+            </form>
+            <span style="visibility: hidden">....</span>
+        </div>
+    </main>
+    <footer>
+        <th:block th:include="~{fragments/footer}"></th:block>
+    </footer>
+</div>
+</body>
+</html>
