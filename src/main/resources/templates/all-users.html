@@ -34,13 +34,13 @@
                                 th:utext="${authorities.authority}">
                             </td>
                         </th:block>
-                        <!--<th:block sec:authorize="hasAuthority('ADMIN')">
+                        <th:block sec:authorize="hasAuthority('ADMIN')">
                             <td class=" bold text-center text-white">
                                 <form th:action="@{/users/delete/{id}(id=${users.id})}">
                                     <button class="btn btn-dark btn-width text-white">Delete User</button>
                                 </form>
                             </td>
-                        </th:block>-->
+                        </th:block>
 
                     </tr>
                 </th:block>

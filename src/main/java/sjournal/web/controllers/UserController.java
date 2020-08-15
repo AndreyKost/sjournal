@@ -124,8 +124,8 @@ public class UserController extends BaseController {
         return super.view("all-users", modelAndView);
     }
 
-    /*@GetMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PageTitle("Delete User")
     public ModelAndView deleteUser(@PathVariable String id, ModelAndView modelAndView) {
         UserServiceModel userServiceModel = this.userService.findById(id);
@@ -137,11 +137,11 @@ public class UserController extends BaseController {
     }
 
     @PostMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ModelAndView deleteUserConfirm(@PathVariable String id) {
         this.userService.deleteUser(id);
 
         return super.redirect("/users/all");
-    }*/
+    }
 
 }
