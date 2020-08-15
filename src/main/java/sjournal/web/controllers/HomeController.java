@@ -1,18 +1,19 @@
-package sjournal.web;
+package sjournal.web.controllers;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 import sjournal.service.TopicService;
 import sjournal.service.UserService;
+import sjournal.web.annotations.PageTitle;
 
 
-import javax.servlet.http.HttpSession;
 
 @Controller
 
-public class HomeController {
+public class HomeController extends BaseController {
     private final UserService userService;
     private final TopicService topicService;
 
@@ -21,20 +22,23 @@ public class HomeController {
         this.topicService = topicService;
     }
 
-    
+
 
 
 
     @GetMapping("/")
-    public String index(){
-        return "index";
+    @PreAuthorize("isAnonymous()")
+    @PageTitle("Index")
+    public ModelAndView index(){
+        return super.view("index");
     }
 
     @GetMapping("/home")
+    @PageTitle("Home")
     @PreAuthorize("isAuthenticated()")
-    public String home(Model model, HttpSession httpSession){
+    public String home(Model model){
 
-       
+
         model.addAttribute("latestTopic",this.topicService.findAllTopicNames());
 
         return "home";

@@ -1,4 +1,4 @@
-package sjournal.web;
+package sjournal.web.controllers;
 
 
 import org.modelmapper.ModelMapper;
@@ -15,10 +15,10 @@ import sjournal.model.service.RoleServiceModel;
 import sjournal.model.service.UserServiceModel;
 import sjournal.model.view.UserProfileViewModel;
 import sjournal.service.UserService;
+import sjournal.web.annotations.PageTitle;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,11 +41,13 @@ public class UserController extends BaseController {
 
 
     @GetMapping("/login")
+    @PageTitle("Login")
     public ModelAndView login() {
         return super.view("login");
     }
 
     @GetMapping("/register")
+    @PageTitle("Register")
     public String register(@Valid @ModelAttribute("userAddBindingModel")
                                        UserAddBindingModel userAddBindingModel,
                            BindingResult bindingResult){
@@ -75,6 +77,7 @@ public class UserController extends BaseController {
 
     @GetMapping("/profile")
     @PreAuthorize("isAuthenticated()")
+    @PageTitle("Profile")
     public ModelAndView profile(Principal principal, ModelAndView modelAndView){
         modelAndView
                 .addObject("userprofile", this.modelMapper
@@ -84,6 +87,7 @@ public class UserController extends BaseController {
 
     @GetMapping("/edit")
     @PreAuthorize("isAuthenticated()")
+    @PageTitle("Edit User")
     public ModelAndView editProfile(Principal principal, ModelAndView modelAndView) {
         modelAndView
                 .addObject("model", this.modelMapper.map(this.userService.findByUsername(principal.getName()), UserProfileViewModel.class));
@@ -105,6 +109,7 @@ public class UserController extends BaseController {
 
     @GetMapping("/all")
     @PreAuthorize("isAuthenticated()")
+    @PageTitle("All users")
     public ModelAndView showAllUsers(ModelAndView modelAndView){
         List<UserServiceModel> users = this.userService.findAllUsers()
                 .stream()
@@ -118,5 +123,25 @@ public class UserController extends BaseController {
         modelAndView.addObject("usersAndAuths", userAndAuthorities);
         return super.view("all-users", modelAndView);
     }
+
+    /*@GetMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PageTitle("Delete User")
+    public ModelAndView deleteUser(@PathVariable String id, ModelAndView modelAndView) {
+        UserServiceModel userServiceModel = this.userService.findById(id);
+
+        modelAndView.addObject("user", userServiceModel);
+        modelAndView.addObject("userId", id);
+
+        return super.view("delete-user", modelAndView);
+    }
+
+    @PostMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ModelAndView deleteUserConfirm(@PathVariable String id) {
+        this.userService.deleteUser(id);
+
+        return super.redirect("/users/all");
+    }*/
 
 }

@@ -91,5 +91,21 @@ public class ArticleServiceImpl implements ArticleService {
         this.articleRepository.delete(article);
     }
 
+    @Override
+    public ArticleServiceModel findArticleByName(String name) {
+        return this.articleRepository.findArticleByName(name)
+                .map(a -> this.modelMapper.map(a, ArticleServiceModel.class))
+                .orElseThrow(() -> new ArticleNotFoundException(Constants.ARTICLE_NOT_FOUND));
+    }
+
+    @Override
+    public List<ArticleServiceModel> findArticleByAuthor(String author) {
+        return this.articleRepository.findAll()
+                .stream()
+                .map(q -> this.modelMapper.map(q, ArticleServiceModel.class))
+                .filter(q -> q.getAuthor().getUsername().equals(author))
+                .collect(Collectors.toList());
+    }
+
 
 }

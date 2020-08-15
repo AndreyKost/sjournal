@@ -17,23 +17,30 @@
             <table class="table table-hover w-75 mx-auto">
                 <thead>
                 <tr class="row mx-auto">
-                    <th class="col-md-1 text-center">#</th>
-                    <th class="col-md-3 text-center">Username</th>
-                    <th class="col-md-2 text-center">Email</th>
-                    <th class="col-md-2 text-center">Roles</th>
+                    <th class="col-md-1 bold text-center text-white">#</th>
+                    <th class="col-md-3 bold text-center text-white">Username</th>
+                    <th class="col-md-2 bold text-center text-white">Email</th>
+                    <th class="col-md-2 bold text-center text-white">Roles</th>
                 </tr>
                 </thead>
                 <tbody>
                 <th:block th:each="users, iter : ${users}">
                     <tr class="row mx-auto">
-                        <th class="col-md-1 text-center" th:utext="${iter.index + 1}"></th>
-                        <td class="col-md-3 text-center" th:utext="${users.username}"></td>
-                        <td class="col-md-2 text-center" th:utext="${users.email}"></td>
+                        <th class="col-md-1 bold text-center text-white" th:utext="${iter.index + 1}"></th>
+                        <td class="col-md-3 bold text-center text-white" th:utext="${users.username}"></td>
+                        <td class="col-md-2 bold text-center text-white" th:utext="${users.email}"></td>
                         <th:block th:each="authorities : ${users.authorities}">
-                            <td class="col-md-2 text-center"
+                            <td class="col-md-2 bold text-center text-white"
                                 th:utext="${authorities.authority}">
                             </td>
                         </th:block>
+                        <!--<th:block sec:authorize="hasAuthority('ADMIN')">
+                            <td class=" bold text-center text-white">
+                                <form th:action="@{/users/delete/{id}(id=${users.id})}">
+                                    <button class="btn btn-dark btn-width text-white">Delete User</button>
+                                </form>
+                            </td>
+                        </th:block>-->
 
                     </tr>
                 </th:block>

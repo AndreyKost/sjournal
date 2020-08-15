@@ -1,4 +1,4 @@
-package sjournal.web;
+package sjournal.web.controllers;
 
 import org.springframework.web.servlet.ModelAndView;
 

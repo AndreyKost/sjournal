@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+</head>
+<body>
+<div class="container-fluid">
+    <header>
+        <th:block th:include="~{fragments/nav}"></th:block>
+    </header>
+    <main class="mt-5">
+        <div class="err">
+            <hr class="bg-hero hr-2"/>
+            <h1 style="font-size: 50px" class="text-center font-weight-bold text-black">Something went wrong! Please retry and try again!</h1>
+            <div class="text-center">
+                <h3  th:utext="${message}" style="font-size: 25px; color: red;"></h3>
+            </div>
+            <div class="text-center">
+                <img src="https://cdn.windowsreport.com/wp-content/uploads/2020/04/Error-8-886x590.jpg" alt="ErrorPalm">
+            </div>
+            <span style="visibility: hidden">....</span>
+        </div>
+    </main>
+    <footer>
+        <th:block th:include="~{fragments/footer}"></th:block>
+    </footer>
+</div>
+</body>
+</html>

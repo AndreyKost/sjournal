@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import sjournal.model.entity.Article;
 
+import java.util.Optional;
+
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, String> {
 
@@ -12,5 +14,7 @@ public interface ArticleRepository extends JpaRepository<Article, String> {
     Article findByTopicName(String name);
 
     Article findByName(String name);
+
+    Optional<Article> findArticleByName(String name);
 
 }

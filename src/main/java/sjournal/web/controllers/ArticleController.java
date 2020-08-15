@@ -1,10 +1,12 @@
-package sjournal.web;
+package sjournal.web.controllers;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -15,11 +17,11 @@ import sjournal.model.service.ArticleServiceModel;
 import sjournal.model.service.ReviewServiceModel;
 import sjournal.model.service.TopicServiceModel;
 import sjournal.model.service.UserServiceModel;
-import sjournal.model.view.ArticleAllViewModel;
 import sjournal.service.ArticleService;
 import sjournal.service.ReviewService;
 import sjournal.service.TopicService;
 import sjournal.service.UserService;
+import sjournal.web.annotations.PageTitle;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -46,6 +48,7 @@ public class ArticleController extends BaseController   {
 
     @GetMapping("/add")
     @PreAuthorize("isAuthenticated()")
+    @PageTitle("Add Article")
     public String add(Model model){
         if(!model.containsAttribute("articleAddBindingModel")){
             model.addAttribute("articleAddBindingModel",new ArticleAddBindingModel());
@@ -82,6 +85,7 @@ public class ArticleController extends BaseController   {
 
     @GetMapping("/rate")
     @PreAuthorize("hasAuthority('ADMIN')")
+    @PageTitle("Rate Article")
     public String rate(Model model){
 
         if(!model.containsAttribute("reviewAddBindingModel")){
@@ -121,6 +125,7 @@ public class ArticleController extends BaseController   {
 
     @GetMapping("/all")
     @PreAuthorize("isAuthenticated()")
+    @PageTitle("All Articles")
     public ModelAndView showAllArticles(ModelAndView modelAndView){
         List<ArticleServiceModel> articles = this.articleService.findWholeArticles();
 
@@ -136,6 +141,7 @@ public class ArticleController extends BaseController   {
 
     @GetMapping("/details/{id}")
     @PreAuthorize("isAuthenticated()")
+    @PageTitle("Article Details")
     public ModelAndView detailsArticle(@PathVariable String id, ModelAndView modelAndView) {
         ArticleServiceModel articleById = this.articleService.findArticleById(id);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm");
@@ -149,6 +155,7 @@ public class ArticleController extends BaseController   {
 
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
+    @PageTitle("Edit Article")
     public ModelAndView editArticle(@PathVariable String id, ModelAndView modelAndView){
         ArticleServiceModel articleServiceModel=this.articleService.findArticleById(id);
 
@@ -169,6 +176,7 @@ public class ArticleController extends BaseController   {
 
     @GetMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
+    @PageTitle("Delete Article")
     public ModelAndView deleteArticle(@PathVariable String id, ModelAndView modelAndView) {
         ArticleServiceModel articleServiceModel = this.articleService.findArticleById(id);
 
@@ -205,6 +213,7 @@ public class ArticleController extends BaseController   {
 
     @GetMapping("/allArticlesRatings")
     @PreAuthorize("isAuthenticated()")
+    @PageTitle("Articles Ratings")
     public ModelAndView showAllArticlesRatings(ModelAndView modelAndView){
         List<ReviewServiceModel> wholeReviews = this.reviewService.findWholeReviews();
         LinkedHashMap<String,List<Double>> articlesNamesWithScores=new LinkedHashMap<>();
@@ -236,6 +245,9 @@ public class ArticleController extends BaseController   {
         return super.view("articles-ratings", modelAndView);
     }
 
-
+    @InitBinder
+    private void initBinder(WebDataBinder webDataBinder) {
+        webDataBinder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+    }
 
 }

@@ -20,4 +20,8 @@ public interface ArticleService {
     ArticleServiceModel editArticle(String id,ArticleServiceModel articleServiceModel);
 
     void deleteArticle(String id);
+
+    ArticleServiceModel findArticleByName(String name);
+
+    List<ArticleServiceModel> findArticleByAuthor(String author);
 }

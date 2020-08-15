@@ -1,4 +1,4 @@
-package sjournal.web;
+package sjournal.web.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

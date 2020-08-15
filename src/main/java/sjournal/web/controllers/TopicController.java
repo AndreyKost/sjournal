@@ -1,4 +1,4 @@
-package sjournal.web;
+package sjournal.web.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import sjournal.model.binding.TopicAddBindingModel;
 import sjournal.model.service.TopicServiceModel;
 import sjournal.service.TopicService;
+import sjournal.web.annotations.PageTitle;
 
 
 import javax.validation.Valid;
@@ -31,6 +32,7 @@ public class TopicController {
 
     @GetMapping("/add")
     @PreAuthorize("hasAuthority('ADMIN')")
+    @PageTitle("Add Topic")
     public String add(@Valid @ModelAttribute("topicAddBindingModel") TopicAddBindingModel topicAddBindingModel,
                       BindingResult bindingResult, RedirectAttributes redirectAttributes){
         return "topic-add";
